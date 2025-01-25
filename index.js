@@ -97,7 +97,7 @@ const getUserDetail = async (id, token, time) => {
     const job = CronJob.from({
       cronTime: "0-10 0 6 * * *",
       onTick: function () {
-        // booking(court.ID, user.data[0].card_id, token)
+        booking(court.ID, user.data[0].card_id, token)
       },
       start: true,
       timeZone: "Asia/Bangkok",
