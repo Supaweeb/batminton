@@ -1,6 +1,8 @@
 const express = require("express")
 const { CronJob } = require("cron")
 const axios = require("axios")
+const app = express();
+const port = process.env.PORT || 3000;
 
 require("dotenv").config()
 
@@ -17,6 +19,7 @@ const kam = {
 const date = "2025-01-25"
 
 const auth = async () => {
+  console.log("Start booking court")
   const authData = {
     username: oh.id,
     password: oh.password,
@@ -94,7 +97,7 @@ const getUserDetail = async (id, token, time) => {
     const job = CronJob.from({
       cronTime: "0-10 0 6 * * *",
       onTick: function () {
-        booking(court.ID, user.data[0].card_id, token)
+        // booking(court.ID, user.data[0].card_id, token)
       },
       start: true,
       timeZone: "Asia/Bangkok",
@@ -106,12 +109,12 @@ const getUserDetail = async (id, token, time) => {
 
 const booking = async (slotId, booker, token) => {
   try {
-    console.log({
-      BOOKING_DATE: date,
-      SLOT_ID: slotId,
-      BOOKING_TITLE: "สนามแบดมินตัน แบดมินตัน สนาม 2",
-      BOOKER_ID: booker,
-    })
+    // console.log({
+    //   BOOKING_DATE: date,
+    //   SLOT_ID: slotId,
+    //   BOOKING_TITLE: "สนามแบดมินตัน แบดมินตัน สนาม 2",
+    //   BOOKER_ID: booker,
+    // })
     const response = await axios.post(
       `${process.env.BASE_URL}/reservation/api/reservation/booking?lang=th`,
       {
@@ -127,13 +130,17 @@ const booking = async (slotId, booker, token) => {
       }
     )
     console.log(response.data)
+    console.log("Booked !!! ", response.data)
   } catch (error) {
     console.error(error.response.data)
   }
 }
 
-const main = () => {
-  auth()
-}
+app.get("/book", (req, res) => {
+  auth();
+  res.send("Hello! Node.js");
+});
 
-main()
+app.listen(port, () => {
+  console.log("Starting node.js at port " + port);
+});
