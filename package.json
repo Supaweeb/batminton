@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
+    "webhook": "nodemon webhook.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.7.9",
+    "axios": "^1.8.2",
+    "body-parser": "^1.20.3",
     "cron": "^3.5.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
